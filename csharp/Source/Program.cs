@@ -9,7 +9,7 @@ namespace csharp
 {
     internal static class Program
     {
-        static Node[,] nodes;
+        private static Node[,] nodes;
 
         private static Node start;
         private static Node finish;
@@ -31,15 +31,13 @@ namespace csharp
         private static void InitializeNodes()
         {
             // Get all the lines from the text file, where the maze is located.
-            var lines = File.ReadAllLines($"{Directory.GetCurrentDirectory()}/../../../../../input/2.txt");
+            var lines = File.ReadAllLines($"{Directory.GetCurrentDirectory()}/../../../../../input/3.txt");
             // Create the 2-dimensional node array.
             xSize = lines.First().Length;
             ySize = lines.Length;
             
             nodes = new Node[ySize, xSize];
             
-            
-
             // Loop through the lines and their characters.
             for (var y = 0; y < ySize; y++)
             for (var x = 0; x < xSize; x++)
@@ -87,7 +85,6 @@ namespace csharp
 
         private static List<Node> TraversePath()
         {
-
             var path = new List<Node> {finish};
             
             while (path.Last().Value > 1)
