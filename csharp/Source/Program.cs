@@ -25,16 +25,20 @@ namespace csharp
             
             var path =  TraversePath();
 
+
             ShowGrid(path);
         }
 
         private static void InitializeNodes()
         {
             // Get all the lines from the text file, where the maze is located.
-            var lines = File.ReadAllLines($"{Directory.GetCurrentDirectory()}/../../../../../input/3.txt");
+            var lines = File.ReadAllLines($"{Directory.GetCurrentDirectory()}../../../../../../input/1.txt");
             // Create the 2-dimensional node array.
             xSize = lines.First().Length;
             ySize = lines.Length;
+
+            Console.WriteLine(xSize);
+            Console.WriteLine(ySize);
             
             nodes = new Node[ySize, xSize];
             
@@ -86,6 +90,8 @@ namespace csharp
         private static List<Node> TraversePath()
         {
             var path = new List<Node> {finish};
+
+            Console.WriteLine(finish.Value);
             
             while (path.Last().Value > 1)
             {
@@ -110,8 +116,8 @@ namespace csharp
             }.Where(pos =>
                 pos.x >= 0 &&
                 pos.y >= 0 &&
-                pos.x < nodes.GetLength(1) &&
-                pos.y < nodes.GetLength(0)
+                pos.x < xSize &&
+                pos.y < ySize
             ).Select(pos => nodes[pos.y, pos.x]).ToList();
 
         }
