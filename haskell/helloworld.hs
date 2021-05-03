@@ -24,7 +24,6 @@ main = do
     -- print the nodes.
     putStrLn (intercalate "\n" ( [(intercalate "" [ (if (node!!2) == -1  then "#" else (if node `elem` path then "." else " " ) ) | node <- (assignedNodes!!y)]) | y <- [0..ySize-1]]))
 
-
     
 assignValues :: [Int] -> [Int] -> [[[Int]]] -> [[[Int]]]
 assignValues start finish nodes = assignValuesRecurisvly finish 1 [start] nodes
@@ -56,5 +55,3 @@ traversePath path value nodes =
     ((head [nextInPath | nextInPath <- (getNeighbours (head path) (length (head nodes)) (length nodes) nodes), (nextInPath!!2) == (((head path)!!2)-1)]):path) 
     (value-1) 
     nodes
-
--- 

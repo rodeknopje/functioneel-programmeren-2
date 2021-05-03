@@ -19,14 +19,18 @@ namespace csharp
 
         private static void Main()
         {
+            var now = DateTime.Now.Millisecond;
+            
             InitializeNodes();
             
             AssignValues();
             
             var path =  TraversePath();
-
-
+            
+            Console.WriteLine(DateTime.Now.Millisecond-now);
+            
             ShowGrid(path);
+            
         }
 
         private static void InitializeNodes()
@@ -36,9 +40,6 @@ namespace csharp
             // Create the 2-dimensional node array.
             xSize = lines.First().Length;
             ySize = lines.Length;
-
-            Console.WriteLine(xSize);
-            Console.WriteLine(ySize);
             
             nodes = new Node[ySize, xSize];
             
@@ -91,8 +92,6 @@ namespace csharp
         {
             var path = new List<Node> {finish};
 
-            Console.WriteLine(finish.Value);
-            
             while (path.Last().Value > 1)
             {
                 var lastNode = path.Last();
@@ -119,7 +118,6 @@ namespace csharp
                 pos.x < xSize &&
                 pos.y < ySize
             ).Select(pos => nodes[pos.y, pos.x]).ToList();
-
         }
 
         private static void ShowGrid(List<Node> path)

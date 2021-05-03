@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"time"
 
 	"github.com/ahmetb/go-linq/v3"
 )
@@ -17,18 +18,20 @@ var start *node
 var finish *node
 
 func main() {
+	now := time.Now().UnixNano() / int64(time.Millisecond)
 	initializeNodes()
 	assignValues()
 	path := traversePath()
+	println((time.Now().UnixNano() / int64(time.Millisecond)) - now)
+
 	printGrid(path)
 }
 
 func initializeNodes() {
 
-	content, _ := ioutil.ReadFile("../input/4.txt")
+	content, _ := ioutil.ReadFile("../input/1.txt")
 
 	lines := strings.Split(string(content), "\n")
-
 	// minus one since go counts line break as a character
 	xSize = len(lines[0]) - 1
 	ySize = len(lines)
@@ -49,11 +52,9 @@ func initializeNodes() {
 
 	start = grid[0][0]
 	finish = grid[ySize-1][xSize-1]
-
 }
 
 func assignValues() {
-
 	currentNodes := []*node{start}
 
 	assignValuesRecursivly(1, currentNodes)
@@ -106,7 +107,6 @@ func getNeighbours(x int, y int) []*node {
 		}
 
 	}
-
 	return result
 }
 
@@ -130,7 +130,6 @@ func traversePath() []*node {
 }
 
 func printGrid(path []*node) {
-
 	for y := 0; y < ySize; y++ {
 		for x := 0; x < xSize; x++ {
 			currentNode := grid[y][x]
