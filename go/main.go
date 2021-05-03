@@ -18,13 +18,16 @@ var start *node
 var finish *node
 
 func main() {
-	now := time.Now().UnixNano() / int64(time.Millisecond)
+
+	now := time.Now()
+
 	initializeNodes()
 	assignValues()
 	path := traversePath()
-	println((time.Now().UnixNano() / int64(time.Millisecond)) - now)
+	println(time.Since(now).Milliseconds())
 
 	printGrid(path)
+
 }
 
 func initializeNodes() {

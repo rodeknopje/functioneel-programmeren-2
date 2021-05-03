@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace csharp
 {
@@ -19,7 +20,9 @@ namespace csharp
 
         private static void Main()
         {
-            var now = DateTime.Now.Millisecond;
+            var stopwatch = new Stopwatch();
+            
+            stopwatch.Start();
             
             InitializeNodes();
             
@@ -27,10 +30,11 @@ namespace csharp
             
             var path =  TraversePath();
             
-            Console.WriteLine(DateTime.Now.Millisecond-now);
+            stopwatch.Stop();
+            
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
             
             ShowGrid(path);
-            
         }
 
         private static void InitializeNodes()
