@@ -10,15 +10,20 @@ main = do
     -- get the dimensions.
     let xSize = length (head contentLines)
     let ySize = length contentLines
-    -- Initialize nodes
+    -- Initialize nodes.
     let nodes = [[[x,y,if(contentLines!!y)!!x=='#' then -1 else 0]| x <- [0..xSize-1]] | y <- [0..ySize-1]]
-    -- Set start and finish node
+    -- Set start and finish node.
     let start  = (nodes!!0)!!0
     let finish = (nodes!!(ySize-1))!!(xSize-1)
-    -- assign the nodes
+    -- assign the nodes.
     let assignedNodes = assignValues start finish nodes
-    -- print the nodes
-    putStrLn (intercalate "\n" ( [(intercalate "" ["["++(if (node!!2) < 9 then "0" else "" )++show((node!!2)+1)++"]" | node <- (assignedNodes!!y)]) | y <- [0..ySize-1]]))
+    -- assign the finish again with the assigned value.
+    let finish = (assignedNodes!!(ySize-1))!!(xSize-1)
+    -- calculate the path.
+    let path = traversePath [finish] (finish!!2) assignedNodes
+    -- print the nodes.
+    putStrLn (intercalate "\n" ( [(intercalate "" [ (if (node!!2) == -1  then "#" else (if node `elem` path then "." else " " ) ) | node <- (assignedNodes!!y)]) | y <- [0..ySize-1]]))
+
 
     
 assignValues :: [Int] -> [Int] -> [[[Int]]] -> [[[Int]]]
@@ -28,6 +33,7 @@ assignValues start finish nodes = assignValuesRecurisvly finish 1 [start] nodes
 assignValuesRecurisvly :: [Int] -> Int  -> [[Int]] -> [[[Int]]] ->  [[[Int]]]
 assignValuesRecurisvly _ _ [] result = result
 assignValuesRecurisvly finish value currentNodes result  = 
+    if (finish!!2 > 0) then result else
     assignValuesRecurisvly 
         finish 
         (value+1) 
@@ -43,10 +49,12 @@ getNeighbours pos xSize ySize nodes = [[x, y, nodes!!y!!x!!2] |
         y >= 0 && y < ySize
     ]
 
-traversePath :: [[[Int]]] -> [Int] -> [[Int]] -> [[Int]]
-traversePath = _ path 1 = path
-traversePath = nodes path currentValue = 
+traversePath :: [[Int]] -> Int -> [[[Int]]] -> [[Int]]
+traversePath path 1 nodes = path
+traversePath path value nodes = 
     traversePath
-    
-    (currentValue-1)
+    ((head [nextInPath | nextInPath <- (getNeighbours (head path) (length (head nodes)) (length nodes) nodes), (nextInPath!!2) == (((head path)!!2)-1)]):path) 
+    (value-1) 
+    nodes
 
+-- 
