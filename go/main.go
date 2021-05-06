@@ -25,7 +25,6 @@ func main() {
 	assignValues()
 	path := traversePath()
 	println(time.Since(now).Milliseconds())
-
 	printGrid(path)
 
 }

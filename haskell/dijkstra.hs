@@ -4,7 +4,7 @@ import System.Directory
 
 main = do
     -- get the file contents a string.
-    content <- (readFile "C:\\Users\\Merlijn\\Documents\\GitHub\\functioneel-programmeren-2\\input\\1.txt")
+    content <- (readFile "C:\\Users\\Merlijn\\Documents\\GitHub\\functioneel-programmeren-2\\input\\2.txt")
     -- convert it to an array with each line in it.
     let contentLines = lines content
     -- get the dimensions.
